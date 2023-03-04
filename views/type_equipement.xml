@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="tequipement_action">
+        <field name="name">equipement</field>
+        <field name="res_model">interventions.tequipement</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="equipement_menu" name="equipement" parent="interventions_base_menu"/>
+    <menuitem id="tequipement_menu1" name="type equipements" action="tequipement_action" parent="equipement_menu"/>
+    
+    <!-- Form View -->
+    <record model="ir.ui.view" id="equipement_view_form">
+        <field name="name">type equipement Form</field>
+        <field name="model">interventions.tequipement</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idTE"/>
+                           <field name="te_libele"/>
+                        </group>                        
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard2_6" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.tequipement</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idTE">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                       <label for="idTE">Id:</label>
+                       <a><field name="idTE"/></a><br></br>  
+                       <label for="te_libele">libele:</label>
+                       <a><field name="te_libele"/></a><br></br>   
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="tequipement_view_tree">
+       <field name="name">type equipement list</field>
+       <field name="model">interventions.tequipement</field>
+       <field name="arch" type="xml">
+          <tree> 
+             <field name="idTE"/>
+             <field name="te_libele"/>
+          </tree>
+        </field>
+    </record> 
+</odoo>

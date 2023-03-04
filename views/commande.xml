@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="commande_action">
+        <field name="name">commande</field>
+        <field name="res_model">interventions.commande</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="commande_menu" name="Commande" parent="interventions_base_menu"/>
+    <menuitem id="commande_menu1" name="commande" action="commande_action" parent="commande_menu"/>
+    <!-- Form View -->
+    <record model="ir.ui.view" id="commande_view_form">
+        <field name="name">commande Form</field>
+        <field name="model">interventions.commande</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idCommande"/>
+                           <field name="commande_libele"/>
+                        </group>     
+                        <group string="Action">
+                           <field name="commande_action"/>
+                        </group>     
+                        <group string="fournisseur">
+                           <field name="commande_fournisseur"/>
+                        </group>              
+                    </group>
+                     <group string="equipements">
+                           <field name="commande_equip" widget="many2many_tags"/>
+                        </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard2" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.commande</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idCommande">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                       <label for="idCommande">Id:</label>
+                       <a><field name="idCommande"/></a><br></br>  
+                       <label for="commande_libele">libele:</label>
+                       <a><field name="commande_libele"/></a><br></br>  
+                       <label for="commande_action">Action:</label>
+                       <a><field name="commande_action"/></a><br></br> 
+                        <label for="commande_fournisseur">Fournisseur:</label>
+                       <a><field name="commande_fournisseur"/></a><br></br> 
+                       <label for="commande_equip">equipements:</label>
+                       <a><field name="commande_equip" widget="many2many_tags"/></a><br></br> 
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="commande_view_tree">
+       <field name="name">commandes list</field>
+       <field name="model">interventions.commande</field>
+       <field name="arch" type="xml">
+          <tree> 
+            <field name="idCommande"/>
+            <field name="commande_libele"/>
+            <field name="commande_action"/>
+            <field name="commande_fournisseur"/>
+            <field name="commande_equip" widget="many2many_tags"/>
+          </tree>
+        </field>
+    </record> 
+</odoo>

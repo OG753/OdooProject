@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="interventions_fiche_print_badge" model="ir.actions.report">
+        <field name="name">Print fiche maintenance</field>
+        <field name="model">interventions.fiche</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">interventions.print_fiche_badge</field>
+        <field name="report_file">interventions.print_fiche_badge</field>
+        <field name="print_report_name">'Print fiche - %s' % (object.f_libele).replace('/', '')</field>
+        <field name="binding_model_id" ref="model_interventions_fiche" />
+    </record>
+
+    <template id="print_fiche_badge">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="fiche">
+                    <div>
+                        <h2 style="text-align:center">
+                            Fiche de maintenance Num :
+                            <t t-esc="fiche.idf" />
+                        </h2><br></br>
+                        <h3 style="text-align:left">
+                            Intervention:
+                        </h3><br></br>
+                    </div>
+                    <div>
+                       <table>
+                          <thead style="background-color:grey">
+                             <tr>
+                                <th class="col-md-1">
+                                 Ref Reparation
+                                </th>
+                                <th class="col-md-2">
+                                 Type intervention
+                                </th>
+                                <th class="col-md-3">
+                                 Action
+                                </th>
+                                <th class="col-md-4">
+                                 Date debut
+                                </th>
+                                <th class="col-md-5">
+                                 Date fin
+                                </th>
+                                <th class="col-md-6">
+                                 Duree
+                                </th>
+                                <th class="col-md-7">
+                                 Priorite
+                                </th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                          <tr t-foreach="fiche.f_maintenance" t-as="l">
+                                <td class="col-md-1">
+                                    <span t-field="l.m_libele"/>
+                                </td>
+                                <div t-foreach="l.m_action" t-as="a">
+                                  <div t-foreach="a.act_intervention" t-as="i">
+                                    <div t-foreach="i.intervention_type" t-as="it">
+                                       <td class="col-md-2">
+                                         <span t-field="it.ti_libele"/>
+                                        </td>
+                                    </div>
+                                    <td class="col-md-3">
+                                          <span t-field="a.act_libele"/>
+                                    </td>
+                                   
+                                <td class="col-md-4">
+                                    <span t-field="i.date_debut"/>
+                                </td>
+                                <td class="col-md-5">
+                                    <span t-field="i.date_fin"/>
+                                </td>
+                                <td class="col-md-6">
+                                    <span t-field="i.duree"/>
+                                </td>
+                                <td class="col-md-7">
+                                    <span t-field="i.priority"/>
+                                </td>
+                            </div>
+                                  </div>
+                          </tr>
+                          </tbody>
+                       </table>
+                    </div><br></br>
+                    <h3 style="text-align:left">
+                            Technicien:
+                    </h3><br></br>
+                    <div>
+                       <table>
+                          <thead style="background-color:grey">
+                             <tr>
+                                <th class="col-md-1">
+                                 Technicien Nom
+                                </th>
+                                <th class="col-md-2">
+                                 Technicien Categorie
+                                </th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                          <tr t-foreach="fiche.f_tech" t-as="tech">
+                                <td class="col-md-1">
+                                    <span t-field="tech.tech_fname"/>
+                                </td>
+                                <div t-foreach="tech.tech_categorie" t-as="tc">
+                                <td class="col-md-2">
+                                    <span t-field="tc.ct_libele"/>
+                                </td>
+                                </div>                        
+                          </tr>
+                          </tbody>
+                       </table>
+                    </div><br></br>
+                    <h3 style="text-align:left">
+                            Equipement:
+                    </h3><br></br>
+                    <div>
+                       <table>
+                          <thead style="background-color:grey">
+                             <tr>
+                                <th class="col-md-1">
+                                 Equipement
+                                </th>
+                                <th class="col-md-2">
+                                 Description
+                                </th>
+                                 <th class="col-md-3">
+                                 Type
+                                </th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                          <tr t-foreach="fiche.f_maintenance" t-as="eq">
+                                <div t-foreach="eq.m_equip_reparation" t-as="c">
+                                <td class="col-md-1">
+                                    <span t-field="c.equip_Libele"/>
+                                </td>
+                                 <td class="col-md-1">
+                                    <span t-field="c.equip_Description"/>
+                                 </td>
+                                <div t-foreach="c.equip_type" t-as="te">
+                                 <td class="col-md-3">
+                                    <span t-field="te.te_libele"/>
+                                 </td>
+                                </div>
+                                </div>                        
+                          </tr>
+                          </tbody>
+                       </table>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+
+</odoo>

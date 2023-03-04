@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="intervention_actions">
+        <field name="name">action</field>
+        <field name="res_model">interventions.action</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="Intervention_menu" name="Intervention" parent="interventions_base_menu"/>
+    <menuitem id="action_menu1" name="action" action="intervention_actions" parent="Intervention_menu"/>
+    <!-- Form View -->
+    <record model="ir.ui.view" id="action_view_form">
+        <field name="name">action Form</field>
+        <field name="model">interventions.action</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idAct"/>
+                           <field name="act_libele"/>
+                           <field name="act_intervention"/>
+                        </group>   
+                        <group string="Commandes">
+                            <field name="act_commande" widget="many2many_tags"/>
+                        </group>  
+                        <group string="Reparation">
+                             <field name="act_maintenance" widget="many2many_tags"/>
+                        </group>                   
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard3" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.action</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idAct">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                       <label for="idAct">id:</label>
+                       <a><field name="idAct"/></a><br></br>  
+                        <label for="act_libele">Action:</label>
+                       <a><field name="act_libele"/></a><br></br>  
+                       <label for="act_intervention">Intervention:</label>
+                       <a><field name="act_intervention"/></a><br></br>   
+                       <label for="act_commande">commandes:</label>
+                       <a><field name="act_commande" widget="many2many_tags"/></a><br></br>  
+                       <label for="act_maintenance">reparation:</label>
+                       <a><field name="act_maintenance" widget="many2many_tags"/></a><br></br>               
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="action_view_tree">
+       <field name="name">Actions List</field>
+       <field name="model">interventions.action</field>
+       <field name="arch" type="xml">
+          <tree> 
+              <field name="idAct"/>
+              <field name="act_libele"/>
+              <field name="act_intervention"/>
+              <field name="act_commande" widget="many2many_tags"/>
+              <field name="act_maintenance" widget="many2many_tags"/>
+          </tree>
+        </field>
+    </record> 
+</odoo>

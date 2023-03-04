@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="responsable_action">
+        <field name="name">responsable</field>
+        <field name="res_model">interventions.responsable</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="departement_menu" name="departement" parent="interventions_base_menu"/>
+    <menuitem id="responsable_menu1" name="responsable" action="responsable_action" parent="departement_menu"/>
+    
+    <!-- Form View -->
+    <record model="ir.ui.view" id="responsable_view_form">
+        <field name="name">responsable Form</field>
+        <field name="model">interventions.responsable</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idRes"/>
+                           <field name="res_fname"/>
+                           <field name="res_lname"/>
+                           <field name="res_ville"/>
+                           <field name="image_1920" widget="image" class="oe_avatar"/>
+                        </group>
+                        <group string="Departement">
+                           <field name="res_departement" widget="many2many_tags"/>
+                        </group>
+                        <group string="Contact">
+                            <field name="res_email"/>
+                            <field name="res_telephone"/>
+                            <field name="name"/>
+                        </group>
+                         <group string="Reclamation">
+                           <field name="res_reclamation" widget="many2many_tags"/>
+                        </group>                        
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record> 
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard2_11" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.responsable</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idRes">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_kanban_record">  
+                       <div class="oe_left oe_avatar">
+                       <field name="image_1920" widget="image" class="oe_avatar"/>
+                       </div>
+                       <ul>
+                       <li>  
+                        <strong><field name="res_departement" widget="many2many_tags"/></strong>
+                       </li>
+                        <li>
+                           <strong><label for="name">Nom:</label></strong>
+                           <a><field name="name"/></a>
+                        </li>
+                        <li>
+                           <strong><label for="res_telephone">telephone:</label></strong>
+                           <a><field name="res_telephone"/></a>
+                        </li>
+                        <li>  
+                           <strong><label for="res_email">email:</label></strong>
+                           <a><field name="res_email"/></a> 
+                        </li>  
+                        <li> 
+                           <strong><label for="res_departement">departement:</label></strong>
+                           <a><field name="res_departement" widget="many2many_tags"/></a>
+                        </li> 
+                       </ul> 
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="responsable_view_tree">
+       <field name="name">responsable list</field>
+       <field name="model">interventions.responsable</field>
+       <field name="arch" type="xml">
+          <tree> 
+             <field name="idRes"/>
+             <field name="res_fname"/>
+             <field name="res_lname"/>
+             <field name="res_email"/>
+             <field name="res_telephone"/>
+             <field name="res_ville"/>
+             <field name="res_departement" widget="many2many_tags"/>
+             <field name="res_reclamation" widget="many2many_tags"/>
+          </tree>
+        </field>
+    </record> 
+</odoo>

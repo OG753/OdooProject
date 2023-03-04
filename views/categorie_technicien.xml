@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="ctechnicien_action">
+        <field name="name">technicien</field>
+        <field name="res_model">interventions.ctechnicien</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="maintenance_menu" name="maintenance" parent="interventions_base_menu"/>
+    <menuitem id="ctechnicien_menu1" name="categorie technicien" action="ctechnicien_action" parent="maintenance_menu"/>
+    <!-- Form View -->
+    <record model="ir.ui.view" id="ctechnicien_view_form">
+        <field name="name">Technicien Form</field>
+        <field name="model">interventions.ctechnicien</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idCT"/>
+                           <field name="ct_libele"/>
+                        </group>     
+                        <group>
+                           <field name="ct_technicien" widget="many2many_tags"/>
+                        </group>                   
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard2_12" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.ctechnicien</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idCT">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                       <label for="idCT">Id:</label>
+                       <a><field name="idCT"/></a><br></br>  
+                       <label for="ct_libele">prenom:</label>
+                       <a><field name="ct_libele"/></a><br></br> 
+                       <label for="ct_technicien">Techniciens:</label>
+                       <a><field name="ct_technicien" widget="many2many_tags"/></a><br></br>
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="ctechnicien_view_tree">
+       <field name="name">technicien list</field>
+       <field name="model">interventions.ctechnicien</field>
+       <field name="arch" type="xml">
+          <tree> 
+            <field name="idCT"/>
+            <field name="ct_libele"/>
+            <field name="ct_technicien" widget="many2many_tags"/>
+          </tree>
+        </field>
+    </record> 
+</odoo>

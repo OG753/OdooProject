@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="technicien_action">
+        <field name="name">technicien</field>
+        <field name="res_model">interventions.technicien</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="maintenance_menu" name="maintenance" parent="interventions_base_menu"/>
+    <menuitem id="technicien_menu1" name="technicien" action="technicien_action" parent="maintenance_menu"/>
+    <!-- Form View -->
+    <record model="ir.ui.view" id="technicien_view_form">
+        <field name="name">Technicien Form</field>
+        <field name="model">interventions.technicien</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idTech"/>
+                           <field name="tech_fname"/>
+                           <field name="tech_lname"/>
+                           <field name="tech_telephone"/>
+                           <field name="tech_ville"/>
+                        </group>
+                        <group string="Maintenance">
+                           <field name="tech_maintenance" widget="many2many_tags"/>
+                        </group>     
+                          <group string="Categorie">
+                           <field name="tech_categorie"/>
+                        </group>                   
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard2_87" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.technicien</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idTech">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                       <label for="idTech">Id:</label>
+                       <a><field name="idTech"/></a><br></br>  
+                       <label for="tech_fname">prenom:</label>
+                       <a><field name="tech_fname"/></a><br></br>  
+                        <label for="tech_lname">nom:</label>
+                       <a><field name="tech_lname"/></a><br></br>
+                        <label for="tech_telephone">telephone:</label>
+                       <a><field name="tech_telephone"/></a><br></br>
+                        <label for="tech_ville">ville:</label>
+                       <a><field name="tech_ville"/></a><br></br>
+                       <label for="tech_maintenance">maintenance:</label>
+                       <a><field name="tech_maintenance" widget="many2many_tags"/></a><br></br>
+                       <label for="tech_categorie">categorie:</label>
+                       <a><field name="tech_categorie"/></a><br></br>
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="technicien_view_tree">
+       <field name="name">technicien list</field>
+       <field name="model">interventions.technicien</field>
+       <field name="arch" type="xml">
+          <tree> 
+            <field name="idTech"/>
+            <field name="tech_fname"/>
+            <field name="tech_lname"/>
+            <field name="tech_telephone"/>
+            <field name="tech_ville"/>
+            <field name="tech_maintenance" widget="many2many_tags"/>
+            <field name="tech_categorie"/>
+          </tree>
+        </field>
+    </record> 
+</odoo>

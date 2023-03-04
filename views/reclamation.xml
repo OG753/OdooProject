@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="reclamation_action">
+        <field name="name">reclamation</field>
+        <field name="res_model">interventions.reclamation</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="Intervention_menu" name="Intervention" parent="interventions_base_menu"/>
+    <menuitem id="reclamation_menu1" name="reclamation" action="reclamation_action" parent="Intervention_menu"/>
+    <!-- Form View -->
+    <record model="ir.ui.view" id="reclamation_view_form">
+        <field name="name">Reclamation Form</field>
+        <field name="model">interventions.reclamation</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                 <button name="submitted_state" string="Envoye" type="object"/>
+                 <button name="underReview_state" string="en cours de traitement" type="object"/>
+                 <button name="accepted_state" string="Accepte" type="object"/>
+                 <button name="refused_state" string="Refuse" type="object"/>
+                 <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idR"/>
+                           <field name="date_reclamation"/>
+                           <field name="description"/>
+                           <field name="objet"/>
+                        </group>      
+                        <group string="Interventions">
+                           <field name="rec_intervention" widget="many2many_tags"/>
+                        </group> 
+                        <group string="reclamation">
+                           <field name="rec_responsable"/>
+                        </group>                   
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard1" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.reclamation</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idR">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                       <label for="idR">Id:</label>
+                       <a><field name="idR"/></a><br></br>  
+                       <label for="objet">Objet:</label>
+                       <a><field name="objet"/></a><br></br> 
+                       <label for="date_reclamation">date:</label>
+                       <a><field name="date_reclamation"/></a><br></br>
+                       <label for="rec_intervention">interventions:</label>
+                       <a><field name="rec_intervention"/></a><br></br>  
+                       <label for="description">description:</label>
+                       <a><field name="description"/></a><br></br> 
+                       <label for="rec_responsable">responsable:</label>
+                       <a><field name="rec_responsable"/></a><br></br> 
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="reclamation_view_tree">
+       <field name="name">Reclamations List</field>
+       <field name="model">interventions.reclamation</field>
+       <field name="arch" type="xml">
+          <tree> 
+            <field name="idR"/>
+            <field name="date_reclamation"/>
+            <field name="description"/>
+            <field name="objet"/>
+            <field name="rec_intervention"/> 
+            <field name="rec_responsable"/>
+          </tree>
+        </field>
+    </record> 
+ <record id="email_template_form" model="ir.ui.view">
+        <field name="model">mail.template</field>
+        <field name="inherit_id" ref="mail.email_template_form" />
+        <field name="arch" type="xml">
+            <field name="model_id" position="after">
+                <field name="body_type" />
+            </field>
+            <field name="body_html" position="before">
+                <group attrs="{'invisible': [('body_type', '!=', 'qweb')]}">
+                    <field
+                        name="body_view_id"
+                        attrs="{'required': [('body_type', '=', 'qweb')]}"
+                    />
+                    <field
+                        name="body_view_arch"
+                        widget="ace"
+                        attrs="{'required': [('body_type', '=', 'qweb')], 'invisible': [('body_view_id', '=', False)]}"
+                    />
+                </group>
+            </field>
+            <field name="body_html" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('body_type', '!=', 'jinja2')]}</attribute>
+            </field>
+        </field>
+    </record>
+    <record id="email_template_tree" model="ir.ui.view">
+        <field name="model">mail.template</field>
+        <field name="inherit_id" ref="mail.email_template_tree" />
+        <field name="arch" type="xml">
+            <field name="report_name" position="before">
+                <field name="body_type" />
+            </field>
+        </field>
+    </record>
+</odoo>

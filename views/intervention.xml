@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="intervention_action">
+        <field name="name">Intervention</field>
+        <field name="res_model">interventions.intervention</field>
+        <field name="view_mode">kanban,tree,form,calendar</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="Intervention_menu" name="Intervention" parent="interventions_base_menu"/>
+    <menuitem id="interventions_semi_menu" name="test"/>
+    <menuitem id="intervention_menu1" name="intervention" action="intervention_action" parent="Intervention_menu"/>
+    <!-- Form View -->
+    <record model="ir.ui.view" id="intervention_view_form">
+        <field name="name">intervention Form</field>
+        <field name="model">interventions.intervention</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                 <button name="encours_state" string="En cours" type="object"/>
+                 <button name="ter_state" string="Terminée" type="object"/>
+                 <button name="ann_state" string="Annulée" type="object"/>
+                 <field name="etat" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idI"/>
+                           <field name="duree"/>
+                           <field name="date_debut"/>
+                           <field name="date_fin"/>
+                        </group>
+                        <group string="reclamation">
+                           <field name="intervention_reclamation"/>
+                           <field name="priority" widget="selection" string="statut"/>
+                        </group>   
+                        <group string="type intervention">
+                           <field name="intervention_type"/>
+                        </group>          
+                         <group string="Actions">
+                           <field name="intervention_action" widget="many2many_tags"/>
+                        </group>            
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.intervention</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idI">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                       <label for="duree">duree:</label>
+                       <a><field name="duree"/></a><br></br>
+                       <label for="date_debut">date debut:</label>
+                       <a><field name="date_debut"/></a><br></br>
+                       <label for="date_fin">date fin:</label>
+                       <a><field name="date_fin"/></a><br></br>  
+                       <label for="intervention_reclamation">reclamation:</label>
+                       <a><field name="intervention_reclamation"/></a><br></br>    
+                       <label for="priority">priorite:</label>
+                       <a><field name="priority"/></a><br></br>       
+                       <label for="intervention_type">type:</label>
+                       <a><field name="intervention_type"/></a><br></br> 
+                       <label for="intervention_action">Actions:</label>
+                       <a><field name="intervention_action"/></a><br></br>      
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+
+    <!-- Vue Calendrier -->
+    <record id="intervention_view_calendar" model="ir.ui.view">
+       <field name="model">interventions.intervention</field>
+       <field name="arch" type="xml">
+         <calendar date_start="date_debut" date_stop="date_fin" color="idI">
+            <field name="duree"/>
+         </calendar>
+       </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="intervention_view_tree">
+       <field name="name">interventions List</field>
+       <field name="model">interventions.intervention</field>
+       <field name="arch" type="xml">
+          <tree> 
+            <field name="duree"/>
+            <field name="date_debut"/>
+            <field name="date_fin"/>
+            <field name="priority"/>
+            <field name="intervention_reclamation"/>
+            <field name="intervention_type"/>
+            <field name="intervention_action" widget="many2many_tags"/>
+          </tree>
+        </field>
+    </record> 
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="departement_action">
+        <field name="name">departement</field>
+        <field name="res_model">interventions.departement</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="departement_menu" name="departement" parent="interventions_base_menu"/>
+    <menuitem id="departement_menu1" name="departement" action="departement_action" parent="departement_menu"/>
+    
+    <!-- Form View -->
+    <record model="ir.ui.view" id="departement_view_form">
+        <field name="name">type departement Form</field>
+        <field name="model">interventions.departement</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idD"/>
+                           <field name="dep_libele"/>
+                           <field name="dep_code"/>
+                        </group>                       
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard2_10" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.departement</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idD">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                       <label for="idD">Id:</label>
+                       <a><field name="idD"/></a><br></br>  
+                       <label for="dep_libele">libele:</label>
+                       <a><field name="dep_libele"/></a><br></br>  
+                       <label for="dep_code">code:</label>
+                       <a><field name="dep_code"/></a><br></br>  
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="departement_view_tree">
+       <field name="name">type departement list</field>
+       <field name="model">interventions.departement</field>
+       <field name="arch" type="xml">
+          <tree> 
+             <field name="idD"/>
+             <field name="dep_libele"/>
+             <field name="dep_code"/>
+          </tree>
+        </field>
+    </record> 
+</odoo>

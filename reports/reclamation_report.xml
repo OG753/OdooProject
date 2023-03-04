@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="reclamation_fiche_print_badge" model="ir.actions.report">
+        <field name="name">Print reclamation</field>
+        <field name="model">interventions.reclamation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">interventions.print_reclamation_badge</field>
+        <field name="report_file">interventions.print_reclamation_badge</field>
+        <field name="print_report_name">'Print fiche - %s' % (object.objet).replace('/', '')</field>
+        <field name="binding_model_id" ref="model_interventions_reclamation" />
+    </record>
+
+    <template id="print_reclamation_badge">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="reclamation">
+                    <div>
+                        <h2 style="text-align:center">
+                            Reclamation Num :
+                            <t t-esc="reclamation.idR" />
+                        </h2><br></br>
+                        <h3 style="text-align:left">
+                             Objet:
+                        </h3><br></br>
+                    </div>
+                    <div>
+                       <table>
+                          <thead style="background-color:grey">
+                             <tr>
+                                <th class="col-md-1">
+                                 objet
+                                </th>
+                                <th class="col-md-2">
+                                 date_reclamation
+                                </th>
+                                <th class="col-md-3">
+                                 description
+                                </th>
+                                <th class="col-md-4">
+                                 responsable
+                                </th>
+                                <th class="col-md-5">
+                                 intervention
+                                </th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                          <tr>
+                           <td class="col-md-1">
+                                    <span t-field="reclamation.objet"/>
+                            </td>
+                            <td class="col-md-2">
+                                    <span t-field="reclamation.date_reclamation"/>
+                            </td>
+                            <td class="col-md-3">
+                                    <span t-field="reclamation.description"/>
+                                </td>
+                          <div t-foreach="reclamation.rec_responsable" t-as="l">
+                                <td class="col-md-4">
+                                    <span t-field="l.res_fname"/>
+                                </td>
+                           </div>
+                           <div t-foreach="reclamation.rec_intervention" t-as="r">
+                                <td class="col-md-5">
+                                    <span t-field="r.idI"/>
+                                </td>
+                            </div>
+                          </tr>
+                          </tbody>
+                       </table>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+
+</odoo>

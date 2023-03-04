@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="ficheMaintenance_action">
+        <field name="name">fiche maintenance</field>
+        <field name="res_model">interventions.fiche</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="maintenance_menu" name="maintenance" parent="interventions_base_menu"/>
+    <menuitem id="fmaintenance_menu1" name="fiche maintenance" action="ficheMaintenance_action" parent="maintenance_menu"/>
+    <!-- Form View -->
+    <record model="ir.ui.view" id="fmaintenance_view_form">
+        <field name="name">Fiche maintenance Form</field>
+        <field name="model">interventions.fiche</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idf"/>
+                           <field name="f_libele"/>
+                        </group>    
+                        <group string="Reparation">
+                           <field name="f_maintenance" widget="many2many_tags"/>
+                        </group>  
+                        <group string="Technicien">
+                           <field name="f_tech"/>
+                        </group>                   
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard2_1" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.fiche</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idf">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                       <label for="idf">Id:</label>
+                       <a><field name="idf"/></a><br></br>  
+                       <label for="f_libele">libele:</label>
+                       <a><field name="f_libele"/></a><br></br>  
+                       <label for="f_maintenance">reparation:</label>
+                       <a><field name="f_maintenance" widget="many2many_tags"/></a><br></br>
+                       <label for="f_tech">reparation:</label>
+                       <a><field name="f_tech"/></a><br></br> 
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="fmaintenance_view_tree">
+       <field name="name">fiche maintenance list</field>
+       <field name="model">interventions.fiche</field>
+       <field name="arch" type="xml">
+          <tree> 
+            <field name="idf"/>
+            <field name="f_libele"/>
+            <field name="f_maintenance" widget="many2many_tags"/>
+            <field name="f_tech"/>
+          </tree>
+        </field>
+    </record> 
+</odoo>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="tintervention_action">
+        <field name="name">type intervention</field>
+        <field name="res_model">interventions.tintervention</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="Intervention_menu" name="Intervention" parent="interventions_base_menu"/>
+    <menuitem id="tintervention_menu1" name="type_intervention" action="tintervention_action" parent="Intervention_menu"/>
+    <!-- Form View -->
+    <record model="ir.ui.view" id="tintervention_view_form">
+        <field name="name">type intervention Form</field>
+        <field name="model">interventions.tintervention</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idTI"/>
+                           <field name="ti_libele"/>
+                        </group>                    
+                        <group>
+                           <field name="type_intervention" widget="many2many_tags"/>
+                        </group>    
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard2" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.tintervention</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idTI">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                       <label for="idTI">Id:</label>
+                       <a><field name="idTI"/></a><br></br>  
+                       <label for="ti_libele">libele:</label>
+                       <a><field name="ti_libele"/></a><br></br>  
+                       <label for="type_intervention">interventions:</label>
+                       <a><field name="type_intervention" widget="many2many_tags"/></a><br></br>
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="tintervention_view_tree">
+       <field name="name">type intervention list</field>
+       <field name="model">interventions.tintervention</field>
+       <field name="arch" type="xml">
+          <tree> 
+            <field name="idTI"/>
+            <field name="ti_libele"/>
+            <field name="type_intervention" widget="many2many_tags"/>
+          </tree>
+        </field>
+    </record> 
+</odoo>

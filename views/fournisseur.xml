@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="fournisseur_action">
+        <field name="name">fournisseur</field>
+        <field name="res_model">interventions.fournisseur</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="commande_menu" name="Commande" parent="interventions_base_menu"/>
+    <menuitem id="fournisseur_menu1" name="fournisseur" action="fournisseur_action" parent="commande_menu"/>
+    <!-- Form View -->
+    <record model="ir.ui.view" id="fournisseur_view_form">
+        <field name="name">fournisseur Form</field>
+        <field name="model">interventions.fournisseur</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idFournisseur"/>
+                           <field name="fournisseur_code"/>
+                           <field name="numero_telephone"/>
+                        </group> 
+                        <group string="coordonnées"> 
+                           <field name="fournisseur_adresse"/>
+                           <field name="fournisseur_region"/>
+                           <field name="code_postal"/>
+                        </group>                 
+                        <group string="Commandes">
+                            <field name="fournisseur_commande" widget="many2many_tags"/>
+                        </group>     
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard4" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.fournisseur</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idFournisseur">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                       <label for="idFournisseur">Id:</label>
+                       <a><field name="idFournisseur"/></a><br></br>  
+                       <label for="fournisseur_code">nom:</label>
+                       <a><field name="fournisseur_code"/></a><br></br>  
+                       <label for="numero_telephone">telephone:</label>
+                       <a><field name="numero_telephone"/></a><br></br>
+                       <label for="fournisseur_adresse">adresse:</label>
+                       <a><field name="fournisseur_adresse"/></a><br></br>
+                       <label for="fournisseur_region">region:</label>
+                       <a><field name="fournisseur_region"/></a><br></br>
+                       <label for="code_postal">code postale:</label>
+                       <a><field name="code_postal"/></a><br></br>
+                       <label for="fournisseur_commande">:</label>
+                       <a><field name="fournisseur_commande" widget="many2many_tags"/></a><br></br>
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="fournisseur_view_tree">
+       <field name="name">fournisseurs list</field>
+       <field name="model">interventions.fournisseur</field>
+       <field name="arch" type="xml">
+          <tree> 
+            <field name="idFournisseur"/>
+            <field name="fournisseur_code"/>
+            <field name="numero_telephone"/>
+            <field name="fournisseur_adresse"/>
+            <field name="fournisseur_region"/>
+            <field name="code_postal"/>
+            <field name="fournisseur_commande" widget="many2many_tags"/>
+          </tree>
+        </field>
+    </record> 
+</odoo>

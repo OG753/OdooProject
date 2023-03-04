@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="equipement_action">
+        <field name="name">equipement</field>
+        <field name="res_model">interventions.equipement</field>
+        <field name="view_mode">tree,form,kanban,graph,pivot</field>
+    </record>
+    <menuitem id="interventions_base_menu" name="Interventions"/>
+    <menuitem id="equipement_menu" name="equipement" parent="interventions_base_menu"/>
+    <menuitem id="equipement_menu1" name="equipements" action="equipement_action" parent="equipement_menu"/>
+    
+    <!-- Form View -->
+    <record model="ir.ui.view" id="equipement_view_form">
+        <field name="name">equipement Form</field>
+        <field name="model">interventions.equipement</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="info">
+                           <field name="idEquip"/>
+                           <field name="equip_Libele"/>
+                           <field name="equip_active"/>
+                        </group>
+                         <group string="price">
+                           <field name="equip_prix"/>
+                           <field name="equip_Description"/>
+                        </group> 
+                        <group string="Commande">
+                           <field name="equip_commande"/>
+                           <field name="equip_reparation" widget="many2many_tags"/>
+                        </group>                       
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+
+    <!-- Vue graphique -->
+    <record id="equipement_view_graphique" model="ir.ui.view">
+       <field name="model">interventions.equipement</field>
+       <field name="arch" type="xml">
+         <graph type="bar">
+            <field name="equip_type"/>
+            <field name="my_equip" type="measure"/> 
+          </graph>
+        </field>
+    </record>
+
+    <!-- Vue Pivot -->
+    <record id="intervention_view_pivot" model="ir.ui.view">
+        <field name="model">interventions.equipement</field>
+        <field name="arch" type="xml">
+          <pivot>
+            <field name="equip_Libele" type="row"/>
+            <field name="equip_type" type="col"/>
+            <field name="equip_prix" type="col"/>
+          </pivot>
+        </field>
+    </record>
+
+    <!-- Vue Knaban -->
+    <record id="class_dashboard2_3" model="ir.ui.view">
+        <field name="name">patrimoine.kanban</field>  
+        <field name="model">interventions.equipement</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+           <kanban default_group_by="idEquip">
+                <templates>
+                   <t t-name="kanban-box">
+                   <div class="oe_kanban_global_click">
+                       <label for="idEquip">Id:</label>
+                       <a><field name="idEquip"/></a><br></br>  
+                       <label for="equip_Libele">libele:</label>
+                       <a><field name="equip_Libele"/></a><br></br>   
+                       <label for="equip_commande">Commande:</label>
+                       <a><field name="equip_commande"/></a><br></br>
+                    </div>
+                    </t>
+                </templates>
+           </kanban>
+        </field>
+    </record>
+    <!-- Vue Tree -->
+    <record model="ir.ui.view" id="equipement_view_tree">
+       <field name="name">equipement list</field>
+       <field name="model">interventions.equipement</field>
+       <field name="arch" type="xml">
+          <tree> 
+             <field name="idEquip"/>
+             <field name="equip_Libele"/>
+             <field name="equip_reparation" widget="many2many_tags"/>
+             <field name="equip_commande"/> 
+             <field name="equip_active"/>
+          </tree>
+        </field>
+    </record> 
+</odoo>
